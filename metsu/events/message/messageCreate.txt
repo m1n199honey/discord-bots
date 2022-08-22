@@ -1,0 +1,51 @@
+GatewayIntentBits.Guilds,
+GatewayIntentBits.GuildMessages,
+GatewayIntentBits.MessageContent,
+GatewayIntentBits.DirectMessages
+
+<ref *1> Message {
+  channelId: '963454523452353454',
+  guildId: '45452345235344',
+  id: '4545234545452345235349257',
+  createdTimestamp: 2345454523452353492575,
+  type: 0,
+  system: false,
+  content: 'ping',
+  author: User {
+    id: '234545452345235349257',
+    bot: false,
+    system: false,
+    flags: UserFlagsBitField { bitfield: 0 },
+    username: 'm1n199',
+    discriminator: '1234',
+    avatar: '6785ad7748c9c45e49f46abcdef',
+    banner: undefined,
+    accentColor: undefined
+  },
+  pinned: false,
+  tts: false,
+  nonce: '2345454523452353492576',
+  embeds: [],
+  components: [],
+  attachments: Collection(0) [Map] {},
+  stickers: Collection(0) [Map] {},
+  editedTimestamp: null,
+  reactions: ReactionManager { message: [Circular *1] },
+  mentions: MessageMentions {
+    everyone: false,
+    users: Collection(0) [Map] {},
+    roles: Collection(0) [Map] {},
+    _members: null,
+    _channels: null,
+    _parsedUsers: null,
+    crosspostedChannels: Collection(0) [Map] {},
+    repliedUser: null
+  },
+  webhookId: null,
+  groupActivityApplication: null,
+  applicationId: null,
+  activity: null,
+  flags: MessageFlagsBitField { bitfield: 0 },
+  reference: null,
+  interaction: null
+}

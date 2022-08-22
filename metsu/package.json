@@ -1,0 +1,16 @@
+{
+  "name": "metsu",
+  "version": "1.0.0",
+  "description": "contain different types of discord bots",
+  "main": "bot.js",
+  "scripts": {
+    "test": "node ."
+  },
+  "keywords": [],
+  "author": "Hachi Metsu",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.3.0",
+    "dotenv": "^16.0.1"
+  }
+}

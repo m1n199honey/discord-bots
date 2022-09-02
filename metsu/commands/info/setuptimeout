@@ -1,0 +1,30 @@
+const timeoutid = "728733521027268717";
+const Discord = require("discord.js");
+var timeout = new Discord.RichEmbed()
+  .setColor("#ff0000")
+  .setAuthor("Oh No!")
+  .setTitle("💀 Timeout 💀")
+  .setDescription(
+    "Oh No! You have been put into timeout to appeal please dm an Executive Administrator+!"
+  );
+exports.run = (client, message, args) => {
+  if (!message.member.roles.some(role => role.name === "Founders")) {
+    var bu = new Discord.RichEmbed()
+      .setColor("#ff0000")
+      .setAuthor("Error:")
+      .setDescription(`You do not have permission to run that command!`)
+      .setFooter("Orien Information");
+    message.channel.send(bu);
+    return;
+  } else {
+    const serverembed = new Discord.RichEmbed()
+      .setColor("#21afbf")
+      .setAuthor(`Success`)
+      .setTimestamp()
+      .setDescription(
+        `:white_check_mark: Successfully setup the Timeout Room!`
+      );
+    client.channels.get(timeoutid).sendEmbed(timeout);
+    message.channel.send(serverembed);
+  }
+};

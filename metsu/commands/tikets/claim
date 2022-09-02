@@ -1,0 +1,53 @@
+const Discord = require("discord.js");
+let days = 0;
+let week = 0;
+var bu = new Discord.RichEmbed()
+  .setColor("#ff0000")
+  .setAuthor("Error:")
+  .setDescription(`This is not a ticket!`)
+  .setFooter("Orien Support");
+
+exports.run = (client, message, args) => {
+  if (!message.channel.name.startsWith(`ticket-`))
+    return message.channel.send(bu);
+  if (
+    !message.member.roles.some(role => role.name === "Customer Service") &&
+    !message.member.roles.some(
+      role => role.name === "Senior Customer Service"
+    ) &&
+    !message.member.roles.some(role => role.name === "BOT Moderation")
+  ) {
+    var uu = new Discord.RichEmbed()
+      .setColor("#ff0000")
+      .setAuthor("Error:")
+      .setDescription(`You do not have permission to run that command!`)
+      .setFooter("Orien Support");
+    message.channel.send(uu);
+    return;
+  }
+
+  let start = new Discord.RichEmbed()
+    .setColor("#1eb0c7")
+    .setAuthor(`Orien Customer Service`, client.user.displayAvatarURL)
+    .setDescription(
+      `Hi there, I would like to thank you for messaging Orien Support my name is ` +
+        "**" +
+        message.author.username +
+        "**" +
+        `\n\nPlease allow me a minute to prepare, if you could explain more about your reason of opening this ticket that would be nice!\n\n\nHere is the higher up people if we were not able to solve your issue please only dm them if it is baised on other information that us support cannot help you with\n\n\nFounder & Owner: <@515984651559632924>\nCo Founder: <@250761057881161738>\nExecutive Director: <@269832519577239552>\nExecutive Administrators: <@572894202023903267> & <@331066571227398156>\nCustomer Relations Team Leader: HIRING\nAdministration Team Leader: HIRING`,
+      true
+    )
+    .setFooter(`Orien Support`);
+  let role = message.guild.roles.find(role => role.name ===  "Customer Service");
+  
+  message.channel.overwritePermissions(role, {
+        SEND_MESSAGES: false,
+        READ_MESSAGES: true
+      });
+  message.channel.overwritePermissions(message.author, {
+        SEND_MESSAGES: true,
+        READ_MESSAGES: true
+      });
+  message.delete();
+  message.channel.send(start);
+};

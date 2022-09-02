@@ -1,0 +1,112 @@
+const Discord = require("discord.js");
+const id = "728733521308287029";
+
+module.exports.run = async (client, message, args) => {
+  let already = new Discord.RichEmbed()
+    .setColor("#ff0000")
+    .setAuthor("Error:")
+    .setTimestamp()
+    .setDescription("You already have a ticket open!")
+    .setFooter("Orien Support");
+
+  let norole = new Discord.RichEmbed()
+    .setColor("#ff0000")
+    .setAuthor("Error:")
+    .setTimestamp()
+    .setDescription(
+      "This server doesn't have a Customer Service Role, please ask a server admin to make one!"
+    )
+    .setFooter("Orien Support");
+
+  const reason = message.content
+    .split(" ")
+    .slice(1)
+    .join(" ");
+
+  if (!message.guild.roles.exists(role => role.name ===  "Customer Service"))
+    return message.channel.send(
+      `This server doesn't have a **Customer Service **Role, please ask a server admin to make one!`
+    );
+  if (message.guild.channels.exists(x => x.name ===  "ticket-" + message.author.id))
+    return message.channel.send(already);
+  message.guild
+    .createChannel(`ticket-${message.author.id}`, "text")
+    .then(c => {
+      let parent = message.guild.channels.find(c => c.name == "tickets");
+      if (!parent) {
+        message.channel.send(
+          "❌ Error: Please create a category called **tickets**"
+        );
+        return;
+      }
+      c.setParent(parent);
+      let role = message.guild.roles.find(role => role.name ===  "Customer Service");
+      let role3 = message.guild.roles.find(role => role.name ===  "Senior Customer Service");
+      let role2 = message.guild.roles.find(role => role.name ===  "@everyone");
+      c.setTopic(`${message.author.id}`);
+      c.overwritePermissions(role, {
+        SEND_MESSAGES: true,
+        READ_MESSAGES: true
+      });
+      c.overwritePermissions(role3, {
+        SEND_MESSAGES: true,
+        READ_MESSAGES: true
+      });
+      c.overwritePermissions(role2, {
+        SEND_MESSAGES: false,
+        READ_MESSAGES: false
+      });
+      c.overwritePermissions(message.author, {
+        SEND_MESSAGES: true,
+        READ_MESSAGES: true
+      });
+
+      let logged = new Discord.RichEmbed()
+        .setColor("#21afbf")
+        .setAuthor("Ticket Created")
+        .setTimestamp()
+        .addField("Ticket Name", c.name)
+        .addField(
+          "User:",
+          `${message.author.username}#${message.author.discriminator}`
+        )
+        .addField("Reason:", reason || `No reason specified`)
+        .setFooter("Orien Support");
+
+      let open = new Discord.RichEmbed()
+        .setColor("#21afbf")
+        .setAuthor("Success")
+        .setDescription(
+          ":white_check_mark: Your ticket has been created, " +
+            "<#" +
+            c.id +
+            ">"
+        )
+        .setFooter("Orien Support");
+
+      message.channel.send(open);
+      const embed = new Discord.RichEmbed()
+        .setColor("#21afbf")
+        .addField(
+          `Hey ${message.author.username}!`,
+          `Please try to explain why you opened this ticket with as much detail as possible. Our **Support Team** will be here soon to help.`
+        )
+        .addField(`Reason`, reason || `No reason specified`)
+        .setFooter(`Orien Customer Service`)
+        .setTimestamp();
+      c.send(`<@${message.author.id}>`);
+      const dmcomplete = new Discord.RichEmbed()
+        .setColor("#28bf21")
+        .setAuthor(`Support Ticket`)
+        .setTimestamp()
+        .setDescription(
+          `Your Support Ticket was successfully created! ` + "<#" + c.id + ">"
+        );
+
+      message.author.send(dmcomplete);
+      c.send({ embed: embed });
+      const channel = message.guild.channels.find(ch => ch.name === "ticket-logs");
+    channel.send(logged)
+    })
+    .catch(console.error);
+};

@@ -1,0 +1,41 @@
+const Discord = require("discord.js");
+const id = "728733521308287029";
+
+module.exports.run = async (client, message, args) => {
+ if (!message.member.roles.some(role => role.name === "Head of Moderation") && !message.member.roles.some(role => role.name === "Assistant Director's")&& !message.member.roles.some(role => role.name === "Crisis Intervention Team (CIT )")&& !message.member.roles.some(role => role.name === "Board of Director's")&& !message.member.roles.some(role => role.name === "Customer Relations Team Leader")&& !message.member.roles.some(role => role.name === "Executive Administrator")&& !message.member.roles.some(role => role.name === "Head Developers")&& !message.member.roles.some(role => role.name === "Executive Director")&& !message.member.roles.some(role => role.name === "Founders")) {
+    var bu = new Discord.RichEmbed()
+      .setColor("#ff0000")
+      .setAuthor("Error:")
+      .setDescription(
+        "Please use the command !end"
+      )
+      .setFooter("Orien Moderation");
+    message.channel.send(bu);
+    return;
+  } else{
+  const ID = message.channel.getTopic;
+  const reason = message.content
+    .split(" ")
+    .slice(1)
+    .join(" ");
+  let logged = new Discord.RichEmbed()
+    .setColor("#21afbf")
+    .setAuthor("Ticket Closed")
+    .setTimestamp()
+    .addField(
+      "Ticket Closer:",
+      `${message.author.username}#${message.author.discriminator}`
+    )
+    .addField("Reason:", reason || `No reason specified`)
+    .setFooter("Orien Support");
+ 
+  if (!message.channel.name.startsWith(`ticket-`))
+    return message.channel.send(
+      `You can't use the close command outside of a ticket channel.`
+    );
+  
+        message.channel.delete();
+      const channel = message.guild.channels.find(ch => ch.name === "ticket-logs");
+    channel.send(logged)
+  }
+  };

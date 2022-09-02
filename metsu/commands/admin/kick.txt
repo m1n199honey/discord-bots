@@ -1,0 +1,75 @@
+const Discord = require("discord.js");
+const id = "728733521308287030";
+exports.run = (client, message, args) => {
+  var error1 = new Discord.RichEmbed()
+    .setColor("#e8d333")
+    .setAuthor("Oops!")
+    .setDescription("You must mention who you want to kick")
+    .setFooter("Orien Moderation");
+  let member =
+    message.mentions.members.first() || message.guild.members.get(args[0]);
+  if (!member) return message.channel.send(error1);
+  let user = message.mentions.users.first();
+  if (!message.member.roles.some(role => role.name === "BOT Moderation")) {
+    var bu = new Discord.RichEmbed()
+      .setColor("#ff0000")
+      .setAuthor("Error:")
+      .addField(
+        "You do not have permissions to run that command!",
+        "Contact the head of moderation if you think this is a mistake"
+      )
+      .setFooter("Orien Moderation");
+    message.channel.send(bu);
+    return;
+  } else {
+    var cool = new Discord.RichEmbed()
+      .setColor("#28bf21")
+      .setAuthor("Success!")
+      .setDescription(member.user.username + ` has been kicked!`)
+      .setFooter("Orien Moderation");
+
+    var error2 = new Discord.RichEmbed()
+      .setColor("#e8d333")
+      .setAuthor("Oh No!")
+      .addField(
+        "I cannot kick this user! Do they have a higher role? Do I have kick permissions?",
+        "Contact the head of moderation if you think this is a mistake"
+      )
+      .setFooter("Orien Moderation");
+
+    if (!member)
+      //you have to type !kick then @username#1234 as an example
+      return message.channel.send(error1);
+    if (!member.kickable) return message.channel.send(error2);
+
+    // slice(1) removes the first part, which here should be the user mention or ID
+    // join(' ') takes all the various parts to make it a single string.
+    let reason = args.slice(1).join(" ");
+    if (!reason) reason = "No reason provided";
+    var logged = new Discord.RichEmbed()
+      .setColor("#21afbf")
+      .setAuthor("Action: Kick")
+      .addField("User:", `${user.username}#${user.discriminator}`)
+      .addField(
+        "Moderator:",
+        `${message.author.username}#${message.author.discriminator}`
+      )
+      .addField("Reason:", reason)
+      .setFooter("Orien Moderation");
+    var tomember = new Discord.RichEmbed()
+      .setColor("#ff0000")
+      .setAuthor("Oh No!")
+      .setDescription(
+        "You have been kicked from the Orien Discord Server for: " + reason
+      )
+      .setFooter("Orien Moderation");
+    member.kick(reason).catch(error => message.channel.send(error2));
+    message.channel.send(cool);
+    message.author.send(cool);
+
+    const mentionedUser = message.mentions.users.first();
+    mentionedUser.send(tomember);
+
+    client.channels.get(id).sendEmbed(logged);
+  }
+};

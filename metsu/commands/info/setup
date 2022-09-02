@@ -1,0 +1,115 @@
+const linksid = "728733520822009920";
+const rulesid = "728733520822009919";
+const aboutid = "728733520822009918";
+
+const Discord = require("discord.js");
+let days = 0;
+let week = 0;
+
+var links = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  .setTimestamp()
+  .setAuthor("Links:")
+  .addField(
+    "Roblox Group",
+    `[Click Here!](https://www.roblox.com/groups/6255772/Orien#!/about)`
+  )
+  .addField("Discord Invite", `https://discord.gg/7Z9yT2R`)
+  .addField(
+    "Report an Outage",
+    `[Click Here!](https://betteruptime.com/report/fmYbRR6khzb18xWgNwDbfeX4)`
+  )
+  .setFooter("Last Updated:");
+
+var sos = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  .setTimestamp()
+  .setAuthor("Customer Service:")
+  .setDescription(`If you need help with any of our services or to report a bug or staff member please feel free to create a ticket!\nTo create a ticket all you need to do is type *__!new__* in any text channel!`)
+  .setFooter("Last Updated:");
+
+var aboutstaff = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+
+  .setAuthor("About")
+  .setTitle("Orien Executive Team")
+  .setDescription(
+    "Founder & Owner: <@515984651559632924>\nCo Founder: <@250761057881161738>\nExecutive Director: <@269832519577239552>\nExecutive Administrators: <@572894202023903267> & <@331066571227398156>\n\n\n\nCustomer Relations Team Leader: HIRING\nAdministration Team Leader: HIRING"
+  );
+
+var about = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  .setAuthor("About")
+  .setTitle("About Orien")
+  .setDescription(
+    "Welcome to Orien! Orien, the smart choice. We provide quality application services and discord bots. With an amazing staff team.\n\nWe Hope to become the next automated services.\n\n\n\n\nSome of our services include:\n:small_blue_diamond: **FREE** Application Centers\n:small_blue_diamond: **FREE** Ranking Bots\n:small_blue_diamond: **FREE** 24/7 Support\n:small_blue_diamond: **CUSTOMIZABLE** Settings\n:small_blue_diamond: **CUSTOMIZABLE** Centers\n\n*Thank you for choosing Orien!*\n**OrienCenter is Founded by UhTrue & Cypher** :hearts:"
+  );
+
+var rulesnote = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  .setTimestamp()
+  .setAuthor("Rules:")
+  .setTitle(`:warning: Notice :warning:`)
+  .setDescription(
+    "All users using Orien or in our sever must follow all of the rules, failure to do so will result in punishment!"
+  )
+  .setFooter("Last Updated:");
+
+var rules = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  .setTimestamp()
+  .setAuthor("Rules:")
+  .addField("1.", "Respect all staff lower and higher than your rank")
+  .addField(
+    "2.",
+    "Do not ask for ranks. You will receive a warning or possibly a kick."
+  )
+  .addField(
+    "3.",
+    "Do not spam in chats or in voice channels. You will receive warnings for doing so"
+  )
+  .addField(
+    "4.",
+    "Please try to utilize grammar. It is important because grammar can help make conversations more understandable with your peers"
+  )
+  .addField(
+    "5.",
+    "NSFW is  extremely prohibited. Pornography and disturbing images or text will result in an a kick or ban"
+  )
+  .addField(
+    "6.",
+    "Racism is prohibited and will not be tolerated. Doing so will result in a kick or ban."
+  )
+  .addField(
+    "7.",
+    "Profanity is not allowed. Any type of threatening with the uses like “the devil will come in your sleep” or “god will punish you” is not accepted here"
+  )
+  .addField(
+    "8.",
+    "Support Staff: only one person should be answering a ticket please don’t join the conversation."
+  )
+  .setFooter("Last Updated:");
+
+exports.run = (client, message, args) => {
+  if (!message.member.roles.some(role => role.name === "Founders")) {
+    var bu = new Discord.RichEmbed()
+      .setColor("#ff0000")
+      .setAuthor("Error:")
+      .setDescription(`You do not have permission to run that command!`)
+      .setFooter("Orien Information");
+    message.channel.send(bu);
+    return;
+  } else {
+    const serverembed = new Discord.RichEmbed()
+      .setColor("#21afbf")
+      .setAuthor(`Success`)
+      .setTimestamp()
+      .setDescription(`:white_check_mark: Successfully setup Orien's Server`);
+    client.channels.get(linksid).sendEmbed(links);
+message.channel.send(serverembed)
+    client.channels.get(rulesid).sendEmbed(rulesnote);
+    client.channels.get(rulesid).sendEmbed(rules);
+    client.channels.get(aboutid).sendEmbed(aboutstaff);
+    client.channels.get(aboutid).sendEmbed(about);
+  }
+};

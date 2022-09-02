@@ -1,0 +1,34 @@
+
+const createatickerid = "728733520822009926";
+
+const Discord = require("discord.js");
+
+var sos = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  .setTimestamp()
+  .setAuthor("Orien Donations")
+  .setDescription(`We currently do not have any donation system setup\nIf you would really like to donate feel free to dm someone with the **Founders** role!`)
+  .setFooter("Last Updated:");
+
+exports.run = (client, message, args) => {
+  if (!message.member.roles.some(role => role.name === "Founders")) {
+    var bu = new Discord.RichEmbed()
+      .setColor("#ff0000")
+      .setAuthor("Error:")
+      .setDescription(`You do not have permission to run that command!`)
+      .setFooter("Orien Information");
+    message.channel.send(bu);
+    return;
+  } else {
+    const serverembed = new Discord.RichEmbed()
+      .setColor("#21afbf")
+      .setAuthor(`Success`)
+      .setTimestamp()
+      .setDescription(
+        `:white_check_mark: Successfully setup the Donation System!`
+      );
+    
+    client.channels.get(createatickerid).sendEmbed(sos);
+    message.channel.send(serverembed);
+  }
+};

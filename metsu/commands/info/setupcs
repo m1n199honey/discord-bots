@@ -1,0 +1,43 @@
+const channelid = "728733521308287028";
+const createatickerid ="728733521027268713";
+
+const Discord = require("discord.js");
+var timeout = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+.setTimestamp()
+  .setAuthor("Customer Service Information")
+  .setTitle("**CS Instructions**")
+  .setDescription(
+    "**To claim a ticket please say** ``!claim`` in a ticket what this does is removes the ability to send messages in that ticket to other customer service members. It also will send a message of information telling the user that you have claimed that ticket.\n\n**If you have to go for any reason please allow the user know that you have to go and you will be transferring this ticket to another user.**\nTo transfer the ticket to another user say ``!transfer [USER_HERE]``\n*If you are caught transferring to an non customer service member you will be fired on the spot and will be service banned.*\nPlease note Customer Service Members that use !transfer will not be able to type in that ticket!\n\n**After your ready to end the ticket type** ``!end``\nAfter 15 seconds the channel will then be set to private and will be reviewed by someone Head of Moderation+!\nIf the reviewer has any questions they will ask you."
+  )
+.setFooter("Last Updated:");
+
+var sos = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  .setTimestamp()
+  .setAuthor("Customer Service:")
+  .setDescription(`If you need help with any of our services or to report a bug or staff member please feel free to create a ticket!\nTo create a ticket all you need to do is type *__!new__* in any text channel!`)
+  .setFooter("Last Updated:");
+
+exports.run = (client, message, args) => {
+  if (!message.member.roles.some(role => role.name === "Founders")) {
+    var bu = new Discord.RichEmbed()
+      .setColor("#ff0000")
+      .setAuthor("Error:")
+      .setDescription(`You do not have permission to run that command!`)
+      .setFooter("Orien Information");
+    message.channel.send(bu);
+    return;
+  } else {
+    const serverembed = new Discord.RichEmbed()
+      .setColor("#21afbf")
+      .setAuthor(`Success`)
+      .setTimestamp()
+      .setDescription(
+        `:white_check_mark: Successfully setup the Customer Service Room!`
+      );
+    client.channels.get(channelid).sendEmbed(timeout);
+    client.channels.get(createatickerid).sendEmbed(sos);
+    message.channel.send(serverembed);
+  }
+};

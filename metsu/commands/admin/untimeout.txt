@@ -1,0 +1,107 @@
+const ms = require("ms");
+const Discord = require("discord.js");
+const id = "728733521308287030";
+var error1 = new Discord.RichEmbed()
+  .setColor("#e8d333")
+  .setAuthor("Oops!")
+  .addField(
+    "You must mention who you want to unmute",
+    "Contact the head of moderation if you think this is a mistake"
+  )
+  .setFooter("Orien Moderation");
+var error2 = new Discord.RichEmbed()
+  .setColor("#e8d333")
+  .setAuthor("Oh No!")
+  .addField(
+    "I was not able to unmute that user!",
+    "Contact the head of moderation if you think this is a mistake"
+  )
+  .setFooter("Orien Moderation");
+
+
+exports.run = async (bot, message, args) => {
+  let user = message.mentions.users.first();
+  if (!message.member.roles.some(role => role.name === "BOT Moderation")) {
+    var bu = new Discord.RichEmbed()
+      .setColor("#ff0000")
+      .setAuthor("Error:")
+      .addField(
+        `You do not have permissions to run that command!`,
+        "Contact the head of moderation if you think this is a mistake"
+      )
+      .setFooter("Orien Moderation");
+    message.channel.send(bu);
+    return;
+  }
+
+  //!tempmute @user 1s/m/h/d
+  let member =
+    message.mentions.members.first() || message.guild.members.get(args[0]);
+  let mutetime = args[1];
+  if (!member) return message.channel.send(error1);
+
+  let cool = new Discord.RichEmbed()
+    .setColor("#28bf21")
+    .setAuthor("Success!")
+    .setDescription(
+      member.user.username + ` has been unmuted`
+    )
+    .setFooter("Orien Moderation");
+  let logged = new Discord.RichEmbed()
+    .setColor("#21afbf")
+    .setAuthor("Action: Unmute")
+    .addField("User:", `${user.username}#${user.discriminator}`)
+    .addField(
+      "Moderator:",
+      `${message.author.username}#${message.author.discriminator}`
+    )
+    .setFooter("Orien Moderation");
+  let unmute = new Discord.RichEmbed()
+    .setColor("#28bf21")
+    .setAuthor("Unmuted!")
+    .setDescription(member.user.username + ` has been unmuted!`)
+    .setFooter("Orien Moderation");
+  let tomute = message.guild.member(
+    message.mentions.users.first() || message.guild.members.get(args[0])
+  );
+
+  if (tomute.hasPermission("MANAGE_MESSAGES"))
+    return message.channel.send(error2);
+  let muterole = message.guild.roles.find(role => role.name === "Muted");
+  //start of create role
+  if (!muterole) {
+    try {
+      muterole = await message.guild.createRole({
+        name: "Muted",
+        color: "#000000",
+        permissions: []
+      });
+      message.guild.channels.forEach(async (channel, id) => {
+        await channel.overwritePermissions(muterole, {
+          SEND_MESSAGES: false,
+          ADD_REACTIONS: false
+        });
+      });
+    } catch (e) {
+      console.log(e.stack);
+    }
+  }
+  //end of create role
+
+  await tomute.removeRole(muterole.id);
+  message.channel.send(cool);
+  bot.channels.get(id).sendEmbed(logged);
+  var tomember = new Discord.RichEmbed()
+    .setColor("#34eb64")
+    .setAuthor("Yay!")
+    .setDescription(
+      "You have been Unmuted in the Orien Discord Server for"
+    )
+    .setFooter("Orien Moderation");
+
+  const mentionedUser = message.mentions.users.first();
+  mentionedUser.send(tomember);
+  message.author.send(cool);
+
+  
+};

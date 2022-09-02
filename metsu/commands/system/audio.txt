@@ -1,0 +1,32 @@
+const { SlashCommandBuilder } = require("discord.js");
+const { createAudioPlayer, NoSubscriberBehavior } = require('@discordjs/voice');
+const path = require('node:path');
+const player = createAudioPlayer({
+    behaviors: {
+        noSubscriber: NoSubscriberBehavior.Pause,
+    },
+});
+const resource = createAudioResource(path.join(__dirname, 'audio','aurora.mp3'));
+
+module.exports = {
+    data: new SlashCommandBuilder()
+        .setName("audio")
+        .setDescription("play audio!"),
+    async execute(command) {
+        try {
+            connection.on(VoiceConnectionStatus.Ready, (oldState, newState) => {
+                console.log('Connection is in the Ready state!');
+            });
+
+            player.on(AudioPlayerStatus.Playing, (oldState, newState) => {
+                console.log('Audio player is in the Playing state!');
+            });
+        }
+        catch (e) {
+            console.log(e);
+        }
+
+        
+    }
+}
+

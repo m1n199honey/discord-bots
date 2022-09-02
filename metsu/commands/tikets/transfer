@@ -1,0 +1,64 @@
+const id = "728733521308287029";
+const Discord = require("discord.js");
+let days = 0;
+let week = 0;
+var bu = new Discord.RichEmbed()
+  .setColor("#ff0000")
+  .setAuthor("Error:")
+  .setDescription(`This is not a ticket!`)
+  .setFooter("Orien Support");
+
+exports.run = (client, message, args) => {
+  let member = message.mentions.members.first() || message.guild.members.get(args[0]);
+  if (!message.channel.name.startsWith(`ticket-`))
+    
+    return message.channel.send(bu);
+  if (
+    !message.member.roles.some(role => role.name === "Customer Service") &&
+    !message.member.roles.some(
+      role => role.name === "Senior Customer Service"
+    ) &&
+    !message.member.roles.some(role => role.name === "BOT Moderation")
+  ) {
+    var uu = new Discord.RichEmbed()
+      .setColor("#ff0000")
+      .setAuthor("Error:")
+      .setDescription(`You do not have permission to run that command!`)
+      .setFooter("Orien Support");
+    message.channel.send(uu);
+    return;
+  }
+
+  let start = new Discord.RichEmbed()
+    .setColor("#1eb0c7")
+    .setAuthor(`Orien Customer Service`, client.user.displayAvatarURL)
+    .setDescription(
+      `Your Customer Service Member has transfered your ticket to ` +
+        "**" +
+        member +
+        "**" + `\n\n\n` +
+        message.author.username +" Hopes you have a great day!",
+      true
+    )
+    .setFooter(`Orien Support`);
+
+  
+  message.channel.overwritePermissions(member, {
+        SEND_MESSAGES: true,
+        READ_MESSAGES: true
+      });
+  message.channel.overwritePermissions(message.author, {
+        SEND_MESSAGES: false,
+        READ_MESSAGES: true
+      });
+  message.delete();
+  message.channel.send(start);
+   let logged = new Discord.RichEmbed()
+    .setColor("#21afbf")
+    .setAuthor("Ticket Transfered")
+    .setTimestamp()
+    .addField("Original User:",`${message.author.username}#${message.author.discriminator}`)
+     .addField("New User:", member)
+      const channel = message.guild.channels.find(ch => ch.name === "ticket-logs");
+    channel.send(logged)
+  };

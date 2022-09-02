@@ -1,0 +1,34 @@
+
+const createatickerid = "728733520822009922";
+
+const Discord = require("discord.js");
+
+var sos = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  
+  .setAuthor("Orien Roblox Group")
+  .addField('Join our Roblox Group!',`[Click Here!](https://www.roblox.com/groups/6255772/Orien#!/about)`,false)
+  .setFooter("Orien Services");
+
+exports.run = (client, message, args) => {
+  if (!message.member.roles.some(role => role.name === "Founders")) {
+    var bu = new Discord.RichEmbed()
+      .setColor("#ff0000")
+      .setAuthor("Error:")
+      .setDescription(`You do not have permission to run that command!`)
+      .setFooter("Orien Information");
+    message.channel.send(bu);
+    return;
+  } else {
+    const serverembed = new Discord.RichEmbed()
+      .setColor("#21afbf")
+      .setAuthor(`Success`)
+      .setTimestamp()
+      .setDescription(
+        `:white_check_mark: Successfully annouced the roblox group!`
+      );
+    
+    client.channels.get(createatickerid).sendEmbed(sos);
+    message.channel.send(serverembed);
+  }
+};

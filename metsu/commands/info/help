@@ -1,0 +1,84 @@
+
+const Discord = require("discord.js");
+var helpembed = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  .setAuthor("Orien Information")
+  .setTitle("Administration Commands")
+  .addField(`!ban`, `Ban a user`, false)
+  .addField(`!kick`, `Kick a user`, false)
+  .addField(`!mute`, `Mute a user`, false)
+.addField(`!unmute`, `Unmute a user`, false)
+  .addField(`!timeout`, `Put a user in timeout`, false)
+  .addField(`!untimeout`, `Release a user from timeout`, false);
+
+var founders = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  .setAuthor("Orien Information")
+  .setTitle("Founder Commands")
+  .addField(
+    `!setup`,
+    `Setup channels like links,rules, and about (Delete the old messages in those channels)`,
+    false
+  )
+  .addField(`!setuptimeout`, `Set up the timeout room`, false)
+.addField(`!setupcs`, `Set up the customer service channel`, false)
+.addField(`!setupdonate`, `Set up the donate  channel`, false)
+.addField(`!setuproblox`, `Announce the roblox group in #annoucements`, false);
+
+var helpembed2 = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  .setAuthor("Orien Information")
+  .setTitle("Regular Commands")
+  .addField(`!help`, `Shows this page`, false)
+  .addField(`!info`, `Shows information about Orien`, false)
+  .addField(`!new`, `Creates a support ticket`, false)
+  .addField(`!close`, `Close your support ticket`, false)
+  .addField(`!verify`, `Link your roblox account`, false);
+
+var customerservice = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  .setAuthor("Orien Information")
+  .setTitle("Customer Service Commands")
+  .addField(`!claim`, `Claim a ticket!`, false)
+.addField(`!transfer`, `Transfer the support ticket to another member`, false);
+
+var sent = new Discord.RichEmbed()
+  .setColor("#1eb0c7")
+  .setAuthor(`Success`)
+  .setTimestamp()
+  .setDescription(`✉️ Check your dms!`);
+
+exports.run = (client, message, args) => {
+  if (message.member.roles.some(role => role.name === "Founders")) {
+    message.channel.send(sent);
+    message.author.send(helpembed);
+    message.author.send(founders);
+    message.author.send(customerservice);
+    message.author.send(helpembed2);
+    return
+  }
+
+  if (message.member.roles.some(role => role.name === "BOT Moderation")) {
+    message.channel.send(sent);
+    message.author.send(helpembed);
+    message.author.send(customerservice);
+    message.author.send(helpembed2);
+    return
+  }
+
+  if (
+    message.member.roles.some(role => role.name === "Customer Service") &&
+    message.member.roles.some(role => role.name === "Senior Customer Service")
+  ) {
+    message.channel.send(sent);
+    message.author.send(customerservice);
+    message.author.send(helpembed2);
+    return
+  }
+
+  if (!message.member.roles.some(role => role.name === "Founders")) {
+    message.channel.send(sent);
+    message.author.send(helpembed2);
+    return
+  }
+}

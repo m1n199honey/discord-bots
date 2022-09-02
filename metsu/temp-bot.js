@@ -21,7 +21,7 @@ client.on("ready", () => {
         guildId: channel.guild.id,
         adapterCreator: channel.guild.voiceAdapterCreator,
     });
-    const resource = createAudioResource('./aurora.mp3');
+    const resource = createAudioResource(path.join(__dirname,'aurora.mp3'));
     const player = createAudioPlayer();
     
 
@@ -34,6 +34,9 @@ client.on("ready", () => {
             setTimeout(() => { console.log("player stop !"); player.stop() }, 30_000);
             setTimeout(() => { console.log("unsubscribe !"); subscription.unsubscribe() }, 60_000);
         }
+    });
+    player.on(AudioPlayerStatus.Playing, (oldState, newState) => {
+        console.log('Audio player is in the Playing state!');
     });
     connection.on('stateChange', (oldState, newState) => {
         console.log(`Connection transitioned from ${oldState.status} to ${newState.status}`);

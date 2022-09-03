@@ -35,8 +35,10 @@ client.on("ready", () => {
             setTimeout(() => { console.log("unsubscribe !"); subscription.unsubscribe() }, 60_000);
         }
     });
-    player.on(AudioPlayerStatus.Playing, (oldState, newState) => {
-        console.log('Audio player is in the Playing state!');
+        connection.on(VoiceConnectionStatus.Ready, (oldState, newState) => {
+        console.log('Connection is in the Ready state!');
+        playSong();
+
     });
     connection.on('stateChange', (oldState, newState) => {
         console.log(`Connection transitioned from ${oldState.status} to ${newState.status}`);

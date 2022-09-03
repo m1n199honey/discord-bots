@@ -37,5 +37,6 @@
      Connection is in the Ready state!
 
 ## but in mine none...<br>
+## it stop at VoiceConnectionStatus.Ready<br>
 ## with excet code (all essential packges are installed ffmpeg-static)<br>
 

@@ -41,7 +41,7 @@ The project uses the following libraries:
 
 ### Manual
 ## follow these steps for complete setup 
-* **clone metsu-music directory using**
+* **clone metsu-music directory using** `https://github.com/hachimetsu/discord-bots.git`
 * **type command** `npm run setup`
 * **open config.json and add these values**
 

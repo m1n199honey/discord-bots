@@ -1,0 +1,27 @@
+{
+  "name": "metsu-music",
+  "version": "1.0.0",
+  "description": "music bot using nodejs and discordjs",
+  "main": "bot.js",
+  "scripts": {
+    "bot": "node .",
+    "deploy": "node deploy-commands.js && node .",
+    "setup": "npm i dependencies && touch config.json"
+  },
+  "keywords": [],
+  "author": "Hachi Metsu",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/opus": "^0.8.0",
+    "@discordjs/rest": "^1.1.0",
+    "dependencies": "^0.0.1",
+    "discord-player": "^5.3.1",
+    "discord.js": "^14.3.0",
+    "dotenv": "^16.0.2",
+    "ffmpeg": "^0.0.4",
+    "ffmpeg-static": "^5.1.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "slash-create": "^5.9.0",
+    "ytdl-core": "^4.11.2"
+  }
+}

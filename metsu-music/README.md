@@ -4,7 +4,6 @@
         npm run setup
     3. open config.json and add these values
         {
-            "prefix": "!",
             "TOKEN": "<YOUR BOT TOKEN here ...>",
             "guildID": "<SERVER/GUILD ID here >",
             "clientID": "BOT/CLIENT ID here..."

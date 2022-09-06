@@ -16,27 +16,28 @@ module.exports = {
         if (!queue || !queue.playing) return void interaction.followUp({ content: "❌ | No music is being played!" });
         // -------------------------------------------
 
-        const page = (interaction.options.get("page")) ? interaction.options.get("page").value : 1;
-        const pageEnd = (-10 * (page - 1)) - 1;
-        const pageStart = (pageEnd - 10);
-        if ((pageEnd * -1) > queue.previousTracks.length) {
+        const previousTracks = require('../../events/player/allEvents.js').previousTracks;
+        const page = (interaction.options.getInteger("page") || interaction.options.getInteger("page") > 0) ? interaction.options.get("page").value : 1;
+        const pageStart = (page - 1) * 10 + 1;
+        const pageEnd = pageStart + 10;
+        if (pageStart > previousTracks.length) {
             return void interaction.followUp({ content: `:x: | That page doesn't exist.` })
         }
         const currentTrack = queue.current;
-        const tracks = queue.previousTracks.slice(pageStart, pageEnd).reverse().map((m, i) => {
-            return `${i + (pageEnd * -1)}. **${m.title}** ([link](${m.url}))`;
+        const tracks = previousTracks.slice(pageStart, pageEnd).map((m, i) => {
+            return `${i + pageStart}. **${m.title}** ([link](${m.url}))`;
         });
 
         return void interaction.followUp({
             embeds: [
                 {
                     title: "Server Queue History",
-                    description: `${tracks.join("\n")}${queue.previousTracks.length > (pageStart * -1)
-                        ? `\n...${(queue.previousTracks.length + pageStart)} more track(s)`
-                        : ""
+                    description: `**Currently playing:**\n🎶 | **${currentTrack.title}** ([link](${currentTrack.url}))\n
+                    ${tracks.join("\n")}${previousTracks.length > pageEnd
+                            ? `\n...${previousTracks.length - pageEnd} more track(s)`
+                            : ""
                         }`,
-                    color: 0xff0000,
-                    fields: [{ name: "Now Playing", value: `🎶 | **${currentTrack.title}** ([link](${currentTrack.url}))` }],
+                    color: 0xff0000
                 },
             ],
         });

@@ -14,11 +14,14 @@ module.exports = {
 
         const queue = client.player.getQueue(interaction.guild);
         if (!queue || !queue.playing) return void interaction.followUp({ content: "❌ | No music is being played!" });
-// -------------------------------------------
+        // -------------------------------------------
 
-        const page = (interaction.options.get("page").value) ? 1 : interaction.options.get("page").value;
+        const page = (interaction.options.get("page")) ? interaction.options.get("page").value : 1;
         const pageEnd = (-10 * (page - 1)) - 1;
         const pageStart = (pageEnd - 10);
+        if ((pageEnd * -1) > queue.previousTracks.length) {
+            return void interaction.followUp({ content: `:x: | That page doesn't exist.` })
+        }
         const currentTrack = queue.current;
         const tracks = queue.previousTracks.slice(pageStart, pageEnd).reverse().map((m, i) => {
             return `${i + (pageEnd * -1)}. **${m.title}** ([link](${m.url}))`;
@@ -29,8 +32,8 @@ module.exports = {
                 {
                     title: "Server Queue History",
                     description: `${tracks.join("\n")}${queue.previousTracks.length > (pageStart * -1)
-                            ? `\n...${(queue.previousTracks.length + pageStart)} more track(s)`
-                            : ""
+                        ? `\n...${(queue.previousTracks.length + pageStart)} more track(s)`
+                        : ""
                         }`,
                     color: 0xff0000,
                     fields: [{ name: "Now Playing", value: `🎶 | **${currentTrack.title}** ([link](${currentTrack.url}))` }],

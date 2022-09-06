@@ -34,8 +34,6 @@ client.commands = new Collection();
 // } = require("@discordjs/voice");
 const { Player } = require("discord-player");
 client.player = new Player(client);
-// ------------------------
-client.login(config.TOKEN);
 
 client.once("ready", () => {
     require(path.join(__dirname, "handleEvents.js"))(client);
@@ -44,3 +42,6 @@ client.once("ready", () => {
 });
 client.on("error", console.error);
 client.on("warn", console.warn);
+
+// ------------------------
+client.login(config.TOKEN);

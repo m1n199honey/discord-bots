@@ -1,3 +1,5 @@
+let previousTracks = [];
+
 module.exports = {
     name: "player",
     async execute(player) {
@@ -11,6 +13,7 @@ module.exports = {
 
         player.on("trackStart", (queue, track) => {
             queue.metadata.send(`🎶 | Started playing: **${track.title}** in **${queue.connection.channel.name}**!`);
+            previousTracks.unshift(track);
         });
 
         player.on("trackAdd", (queue, track) => {
@@ -19,15 +22,18 @@ module.exports = {
 
         player.on("botDisconnect", (queue) => {
             queue.metadata.send("❌ | I was manually disconnected from the voice channel, clearing queue!");
+            previousTracks = [];
         });
 
         player.on("channelEmpty", (queue) => {
             queue.metadata.send("❌ | Nobody is in the voice channel, leaving...");
+            previousTracks = [];
         });
 
         player.on("queueEnd", (queue) => {
             queue.metadata.send("✅ | Queue finished!");
+            previousTracks = [];
         });
     },
-
+    previousTracks
 };

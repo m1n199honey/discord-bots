@@ -12,7 +12,7 @@ module.exports = {
         ),
     async execute(interaction, client) {
         await interaction.deferReply();
-// --------------------------------------------
+        // --------------------------------------------
 
         const searchResult = await client.player
             .search(interaction.options.get("query").value, {
@@ -31,17 +31,17 @@ module.exports = {
                 highWaterMark: 1 << 30,
                 dlChunkSize: 0,
             },
-            metadata: interaction.channel,
+            metadata: interaction.channel
         });
         try {
             if (!queue.connection) await queue.connect(interaction.member.voice.channel);
-        // eslint-disable-next-line brace-style
+            // eslint-disable-next-line brace-style
         } catch {
             void client.player.deleteQueue(interaction.guild);
             return void interaction.followUp({ content: "Could not join your voice channel!" });
         }
 
-        await interaction.followUp({ content: `⏱ | Loading your ${searchResult.playlist ? "playlist" : "track"}...` });
+        await interaction.editReply({ content: `⏱ | Loading your ${searchResult.playlist ? "playlist" : "track"}...` });
         searchResult.playlist ? queue.addTracks(searchResult.tracks) : queue.addTrack(searchResult.tracks[0]);
         if (!queue.playing) await queue.play();
     },

@@ -55,3 +55,5 @@ The project uses the following libraries:
         
 * **next time u can run bot (if u have not changed command ) using ...** `npm run bot`
 
+# contributer 
+* 

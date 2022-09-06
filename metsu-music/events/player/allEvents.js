@@ -1,6 +1,5 @@
-
 module.exports = {
-    name: 'player',
+    name: "player",
     async execute(player) {
         console.log("inside player Events !...");
         player.on("error", (queue, error) => {
@@ -29,6 +28,6 @@ module.exports = {
         player.on("queueEnd", (queue) => {
             queue.metadata.send("✅ | Queue finished!");
         });
-    }
+    },
 
 };

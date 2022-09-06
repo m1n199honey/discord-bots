@@ -1,18 +1,20 @@
 const { SlashCommandBuilder } = require("discord.js");
+// const { QueryType } = require("discord-player");
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName("skip")
-        .setDescription("skip the song !"),
+        .setName("back")
+        .setDescription("Play the previous track"),
     async execute(interaction, client) {
 
         await interaction.deferReply();
 
         const queue = client.player.getQueue(interaction.guild);
         if (!queue || !queue.playing) return void interaction.followUp({ content: "❌ | No music is being played!" });
-// -------------------------------const currentTrack = queue.current;
-        const success = queue.skip();
-        return void interaction.followUp({
-            content: success ? `✅ | Skipped **${currentTrack}**!` : "❌ | Something went wrong!",
-        });
+// --------------------------------------------
+        await queue.back();
+
+        interaction.followUp({ content: "✅ | Playing the previous track!" });
     },
+
+
 };

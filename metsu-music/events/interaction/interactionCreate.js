@@ -1,9 +1,9 @@
 const { GuildMember } = require("discord.js");
 module.exports = {
-    name: 'interactionCreate',
+    name: "interactionCreate",
     async execute(interaction, client) {
         // console.log(interaction);
-        console.log('interaction event is triggered ...');
+        console.log("interaction event is triggered ...");
         if (!interaction.isChatInputCommand() || !interaction.guildId) return;
 
         if (!interaction.member.voice.channel || !(interaction.member instanceof GuildMember)) {
@@ -16,9 +16,9 @@ module.exports = {
         catch (error) {
             console.error(error);
             await interaction.reply({
-                content: 'There was an error while executing this command!',
-                ephemeral: true
+                content: "There was an error while executing this command!",
+                ephemeral: true,
             });
         }
-    }
-}
+    },
+};

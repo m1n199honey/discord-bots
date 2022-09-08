@@ -40,8 +40,7 @@ client.once("ready", () => {
     client.handleEvents();
     console.log("done...");
 });
-client.on("error", console.error);
-client.on("warn", console.warn);
+
 
 // ------------------------
 client.login(config.TOKEN);
